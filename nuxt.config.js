@@ -28,6 +28,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    './plugins/mixins/user.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -53,18 +54,18 @@ export default {
     strategies: {
       local: {
         token: {
-          property: 'token',
+          property: 'meta.token',
           // required: true,
           // type: 'Bearer'
         },
         user: {
-          property: 'user',
+          property: 'data',
           // autoFetch: true
         },
         endpoints: {
-          login:  { url: 'login' , method: 'post' },
+          login: { url: 'login', method: 'post' },
           logout: { url: 'logout', method: 'post' },
-          user:   { url: 'user'  , method: 'get'  }
+          user: { url: 'user', method: 'get' }
         }
       }
     }

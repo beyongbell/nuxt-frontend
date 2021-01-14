@@ -24,5 +24,15 @@
             </ul>
             </div>
         </div>
+        {{ authenticated }}
     </nav>
 </template>
+
+<script>
+export default {
+}
+</script>
+
+<style>
+
+</style>
