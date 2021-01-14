@@ -50,10 +50,23 @@ export default {
   },
 
   auth: {
-    endpoints: {
-      login : { url: '/api/auth/login' , method: 'post', propertyName: 'meta.token' },
-      logout: { url: '/api/auth/logout', method: 'post' },
-      user  : { url: '/api/auth/user'  , method: 'get' , propertyName: 'data'}
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'user',
+          // autoFetch: true
+        },
+        endpoints: {
+          login:  { url: 'login' , method: 'post' },
+          logout: { url: 'logout', method: 'post' },
+          user:   { url: 'user'  , method: 'get'  }
+        }
+      }
     }
   },
 
