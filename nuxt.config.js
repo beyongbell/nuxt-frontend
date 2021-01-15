@@ -29,6 +29,7 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     './plugins/mixins/user.js',
+    './plugins/mixins/validation.js',
     './plugins/axios.js'
   ],
 

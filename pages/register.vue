@@ -6,17 +6,17 @@
             <div class="mb-3">
                 <label for="fullName" class="form-label">Full Name</label>
                 <input v-model.trim="form.name" type="text" class="form-control" autofocus>
-                <small class="form-text text-danger"> Show error message!</small>
+                <small class="form-text text-danger" v-if="errors.name"> {{ errors.name[0] }}</small>
             </div>
              <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input v-model.trim="form.email" type="email" class="form-control">
-                <small class="form-text text-danger"> Show error message!</small>
+                <small class="form-text text-danger" v-if="errors.email"> {{ errors.email[0] }}</small>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input v-model.trim="form.password" type="password" class="form-control">
-                <small class="form-text text-danger"> Show error message!</small>
+                <small class="form-text text-danger" v-if="errors.password"> {{ errors.password[0] }}</small>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
