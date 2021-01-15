@@ -38,14 +38,18 @@ export default {
     },
     methods: {
         async submit() {
-            await this.$axios.$post('register', this.form)
-            await this.$auth.loginWith('local', {
-                data: {
-                    email : this.form.email,
-                    password: this.form.password
-                }
-            })
-            this.$router.push('/')
+            try {
+                await this.$axios.$post('register', this.form)
+                await this.$auth.loginWith('local', {
+                    data: {
+                        email : this.form.email,
+                        password: this.form.password
+                    }
+                })
+                this.$router.push('/')
+            } catch (e) {
+                return;
+            }
         }
     }
 };

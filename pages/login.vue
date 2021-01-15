@@ -32,8 +32,12 @@ export default {
     },
     methods: {
         async submit() {
-            let response = await this.$auth.loginWith('local', { data: this.form })
-            console.log(response)
+            try {
+                await this.$auth.loginWith('local', { data: this.form })
+                this.$router.push('/')
+            } catch (e) {
+                return;
+            }
         }
     }
 };
