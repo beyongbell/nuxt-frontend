@@ -9,25 +9,41 @@
                 <p class="text-muted"> {{ content.created_at }} by {{ content.user.name }} </p>
             </div>
         </div>
+
+        <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li v-for="(link, item) in links" :key="item"  class="page-item">
+                <a @click="loadMore(link)" class="page-link" href="#">{{ item }}</a>
+            </li>
+        </ul>
+        </nav>
     </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            topics: []
-        }
-    },
-    async asyncData({ $axios }) {
-        let {data} = await $axios.$get('/topics');
-        return { topics : data }
-    }
-}
+  data() {
+    return {
+      topics: [],
+      links: [],
+    };
+  },
+  async asyncData({ $axios }) {
+    let { data, links } = await $axios.$get("/topics");
+    console.log(links);
+    return { topics: data, links };
+  },
+  methods: {
+      async loadMore(link) {
+        let { data } = await this.$axios.$get(link);
+        return this.topics = { ...this.topics, ...data }
+      }
+  }
+};
 </script>
 
 <style>
-    .content {
-        border-left: 10px solid white;
-    }
+.content {
+  border-left: 10px solid white;
+}
 </style>
