@@ -2,7 +2,7 @@
     <div class="container">
         <h2> Letest Topics </h2>
         <div v-for="(topic, index) in topics" :key="index" class="bg-light my-5 p-4">
-            <h2>{{ topic.title }}</h2>
+            <h2> <nuxt-link :to="{name: 'topics-id', params: { id: topic.id }}"> {{ topic.title }} </nuxt-link></h2>
             <p class="text-muted"> {{ topic.created_at }} by {{ topic.user.name }} </p>
             <div v-for="(content, index) in topic.posts" :key="index" class="ms-5 content p-3">
                 {{ content.body }}
