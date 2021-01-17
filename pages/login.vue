@@ -36,7 +36,7 @@ export default {
             try {
                 await this.$auth.loginWith('local', { data: this.form })
                 this.$router.push({
-                    path: this.$route.query.redirect || '/profile'
+                    path: this.$route.query.redirect || '/dashboard'
                 })
             } catch (e) {
                 return;
