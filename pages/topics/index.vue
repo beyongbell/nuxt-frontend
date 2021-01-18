@@ -38,7 +38,6 @@ export default {
   },
   async asyncData({ $axios }) {
     let { data, links } = await $axios.$get("/topics");
-    console.log(links);
     return { topics: data, links };
   },
   methods: {

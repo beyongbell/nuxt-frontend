@@ -1,6 +1,5 @@
 <template>
    <div class="container">
-        <h2> Single Topic Page </h2>
         <div class="bg-light my-5 p-4">
             <h2 class="display-3"> {{ topic.title }} </h2>
             <p class="text-muted"> {{ topic.created_at }} by {{ topic.user.name }} </p>
@@ -9,6 +8,16 @@
                 <p class="text-muted"> {{ content.created_at }} by {{ content.user.name }} </p>
             </div>
         </div>
+        <div class="my5 mx5" v-if="authenticated">
+            <form @submit.prevent="create">
+                <div class="form-group">
+                    <label for="post" class="my-2">  <h4>  Add a new Post  </h4></label>
+                    <textarea v-model="body" rows="5" placeholder="Write something" class="form-control"></textarea>
+                    <small class="form-text text-danger" v-if="errors.body"> {{ errors.body[0] }}</small>
+                </div>
+                <button class="btn btn-outline-primary mt-3">Add a new Post</button>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -16,12 +25,19 @@
 export default {
     data() {
         return {
-            topic: ''
+            topic: '',
+            body: ''
         }
     },
     async asyncData({$axios, params}) {
         const {data} = await $axios.$get(`/topics/${params.id}`);
         return { topic : data }
+    },
+    methods: {
+        async create() {
+            await this.$axios.$post(`/topics/${this.$route.params.id}/posts`, { body : this.body })
+            this.$router.push('/topics')
+        }
     }
 }
 </script>
