@@ -5,9 +5,10 @@
             <h2> <nuxt-link :to="{name: 'topics-id', params: { id: topic.id }}"> {{ topic.title }} </nuxt-link></h2>
             <div v-if="authenticated">
               <div v-if="user.id === topic.user.id">
-                <nuxt-link :to="{name: 'topics-edit', params: { id: topic.id }}"> 
-                  <button class="btn btn-warning fa fa-edit float-end"></button> 
+                <nuxt-link :to="{name: 'topics-edit', params: { id: topic.id }}">
+                  <button class="btn btn-warning fa fa-edit float-end"></button>
                 </nuxt-link>
+                <button @click="deleteTopic(topic.id)" class="btn btn-danger fa fa-trash float-end mx-2"></button>
               </div>
             </div>
             <p class="text-muted"> {{ topic.created_at }} by {{ topic.user.name }} </p>
@@ -44,6 +45,10 @@ export default {
       async loadMore(link) {
         let { data } = await this.$axios.$get(link);
         return this.topics = { ...this.topics, ...data }
+      },
+      async deleteTopic(id) {
+        await this.$axios.$delete(`/topics/${id}`)
+        this.$router.push('/')
       }
   }
 };
