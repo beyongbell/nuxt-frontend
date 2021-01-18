@@ -4,7 +4,15 @@
             <h2 class="display-3"> {{ topic.title }} </h2>
             <p class="text-muted"> {{ topic.created_at }} by {{ topic.user.name }} </p>
             <div v-for="(content, index) in topic.posts" :key="index" class="ms-5 content p-3">
-                {{ content.body }}
+                <p> {{ content.body }} </p> 
+                <div v-if="authenticated">
+                    <div v-if="user.id === content.user.id">
+                        <button @click="deletePost(content.id)" class="btn btn-danger fa fa-trash float-end mx-2"></button>
+                        <nuxt-link :to="{name: 'topics-posts-edit', params: { id: content.id }}">
+                            <button class="btn btn-warning fa fa-edit float-end"></button>
+                        </nuxt-link>
+                    </div>
+                </div>
                 <p class="text-muted"> {{ content.created_at }} by {{ content.user.name }} </p>
             </div>
         </div>
@@ -37,6 +45,10 @@ export default {
         async create() {
             await this.$axios.$post(`/topics/${this.$route.params.id}/posts`, { body : this.body })
             this.$router.push('/topics')
+        },
+        async deletePost(id) {
+            await this.$axios.$delete(`/topics/${this.$route.params.id}/posts/${id}`)
+            this.$router.push('/')
         }
     }
 }
