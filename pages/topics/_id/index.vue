@@ -8,7 +8,7 @@
                 <div v-if="authenticated">
                     <div v-if="user.id === content.user.id">
                         <button @click="deletePost(content.id)" class="btn btn-danger fa fa-trash float-end mx-2"></button>
-                        <nuxt-link :to="{name: 'topics-posts-edit', params: { id: content.id }}">
+                        <nuxt-link :to="{name: 'topics-posts-edit', params: { id: $route.params.id, body: content.id  }}">
                             <button class="btn btn-warning fa fa-edit float-end"></button>
                         </nuxt-link>
                     </div>

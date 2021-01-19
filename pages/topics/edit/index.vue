@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         async update() {
-            await this.$axios.patch(`/topics/${this.$route.params.id}`, {
+            await this.$axios.$patch(`/topics/${this.$route.params.id}`, {
                 title: this.topic.title
             })
             this.$router.push('/topics')
