@@ -15,6 +15,9 @@
             <div v-for="(content, index) in topic.posts" :key="index" class="ms-5 content p-3">
                 {{ content.body }}
                 <p class="text-muted"> {{ content.created_at }} by {{ content.user.name }} </p>
+                <div class="btn btn-primary fa fa-thumbs-up ml-5 mb-2" @click="likePost(topic.id, content)">
+                  <span class="badge">{{content.like_count}}</span>
+                </div>
             </div>
         </div>
 
@@ -48,6 +51,28 @@ export default {
       async deleteTopic(id) {
         await this.$axios.$delete(`/topics/${id}`)
         this.$router.push('/')
+      },
+      async likePost(topicId, content) {
+        const userFromVuex = this.$store.getters["user"];
+        if (userFromVuex) {
+          if (userFromVuex.id === content.user.id) {
+            alert('You cant like your own post')
+            return false;
+          }
+          if (content.users) {
+            if (content.users.some(user => user.id === userFromVuex.id)) {
+              alert('You have already liked this post')
+            } else {
+              await this.$axios.$post(`/topics/${topicId}/posts/${content.id}/likes`)
+              let {data, links} = await this.$axios.$get(`/topics`)
+              this.topics = data
+              this.links = links
+            }
+          }
+        } else {
+          alert('Please log in')
+          this.$router.push('/login')
+        }
       }
   }
 };
